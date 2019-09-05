@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Map Viewer exercise for TransLoc</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- leaflet map-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+    <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+    <style>
+        #mapid { height: 600px; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h4>Map Viewer exercise for TransLoc</h4>
+                    </div>
+                    <div class="panel-body" id="mapid"></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var mymap = L.map('mapid').setView([35.87535,-78.8428955], 12);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 15,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoicGFuZ2VhMzMiLCJhIjoiY2swNGtoeHN0MDJwZTNucG5zanB1cnBqeSJ9.eoHKvNZDxR0Yxtnc2bxjDw'
+    }).addTo(mymap);
+    var marker = L.marker([35.87535,-78.8428955]).addTo(mymap);
+
+    mymap.on('click', repopMap);
+    mymap.on('moveend', repopMap);
+    function getGeoParams() {
+        var bounds = mymap.getBounds();
+        var northEast = bounds.getNorthEast(),
+            southWest = bounds.getSouthWest();
+        var geoParams = {
+            latArr: [northEast.lat, southWest.lat],
+            longArr: [northEast.lng, southWest.lng],
+        }
+        return geoParams;
+    }
+
+    function repopMap() {
+        var geoParams = getGeoParams();
+        getResults(geoParams);
+    }
+    
+
+    function getResults(geoParams) {
+        $.ajax({ url: 'getIpsByBoundaryBox',
+            type: 'get',
+            dataType: "json",
+            data:geoParams,
+            beforeSend: function() {
+                /*
+                var tempText = '<p class="text-center"><strong>Retrieving your urls. This may take a moment...</strong></p>';
+                $('#results').html(tempText);
+                */
+            },
+            success: function(data) {
+                var heat = L.heatLayer(data, {radius: 25}).addTo(mymap);
+                /*
+                $('#results').html('<div></div>');
+                // include general feedback
+                if ( typeof(data.feedback) !== 'undefined' ) {
+                    var feedback = '<p><strong>Feedback:</strong></p><ul id="feedback" style="list-style: none;"></ul>';
+                    $('#results').append(feedback);
+                    $.each(data.feedback, function(i, item) {
+                        $('#feedback').append('<li>'+item+'</li>');
+                    });
+                }
+                // include url details
+                if ( typeof(data.urlDetails) !== 'undefined' ) {
+                    var urlDetails = '<p><strong>URL Details:</strong></p><p id="urlDetails"></p>';
+                    $('#results').append(urlDetails);
+                    $.each(data.urlDetails, function(i, item) {
+                        // each item is a url with detailed information
+                        detailHead = '<p class="medPad"><strong>'+item.url+'</strong> <a href="'+item.url+'" target="_blank"><small>(Launch Url)</small></a></p>';
+                        $('#urlDetails').append(detailHead);
+                        detailBody = '<ul>';
+                        if (item.status == 'success') {
+                            detailBody += '<li><strong>File Type: </strong>' + item.filetype + '</li>';
+                            detailBody += '<li><strong>Total Requests: </strong>' + item.totalrequests + '</li>';
+                            detailBody += '<li><strong>Total Size: </strong>' + item.totalsize + '</li>';
+                        } else {
+                            detailBody += '<li><strong>Failed: </strong>' + item.details + '</li>';
+                        }		
+                        detailBody += '</ul>';
+                        $('#urlDetails').append(detailBody);
+                    });
+                }
+                */
+            }
+        });
+    }
+    $( repopMap() );
+</script>
+</html>
