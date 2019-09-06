@@ -32,7 +32,7 @@ app.use(routes);
 app.use((req, res, next) => {
     next(boom.notFound());
 });
-// Error Handling Middleware
+// error handler middleware
 app.use((err, req, res, next) => { /* eslint-disable-line */
     if (!err.isBoom) {
         return next(err);
@@ -40,7 +40,7 @@ app.use((err, req, res, next) => { /* eslint-disable-line */
     logger.error(`${err.output.statusCode} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
     res.status(err.output.statusCode).json(err.output.payload);
 });
-// Catch all Error Handler
+// catch all error handler
 app.use((err, req, res, next) => { /* eslint-disable-line */
     logger.error(`500 - Unhandled Exception - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
     res.sendStatus(500);
