@@ -9,7 +9,7 @@ const BlockController = {
         // [lat, long, intensity]
         const respArr = [];
         resultsArr.forEach((element) => {
-            respArr.push([element.latitude, element.longitude, 0.3]);
+            respArr.push([element.latitude, element.longitude, 0.2]);
         });
         return respArr;
     },

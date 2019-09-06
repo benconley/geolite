@@ -1,4 +1,5 @@
 require('dotenv').config();
+const appRoot = require('app-root-path');
 const express = require('express');
 const boom = require('boom');
 const morgan = require('morgan');
@@ -8,10 +9,10 @@ const app = express();
 const routes = require('./routes/routes');
 
 const port = process.env.NODE_PORT;
-
-// HTTP Request Logging
+// assets
+app.use(express.static(`${appRoot}/public`));
+// HTTP request logging
 app.use(morgan('combined'));
-
 // headers
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');

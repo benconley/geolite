@@ -5,6 +5,14 @@ module.exports = {
         "no-underscore-dangle": ["error", { allowAfterThis: true }],
         "camelcase": ["error", { ignoreDestructuring: true, properties: "never" }],
     },
+    overrides: [
+        {
+            files: ["*.e2e.js"],
+            rules: {
+                "import/no-extraneous-dependencies": 0,
+            }
+        }
+    ],
     env: {
         "jest": true
     }

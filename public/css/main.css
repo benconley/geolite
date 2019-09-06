@@ -1,0 +1,6 @@
+.container-fluid {
+    max-width:90%;
+}
+#mapid { height: 600px; }
+.card { background-color: #c0c0c0; }
+.loading { visibility: hidden };
