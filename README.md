@@ -18,9 +18,8 @@ geolite is a simple nodeJS application to retrieve and map Internet address info
   * Retrieve coordinates and address information contained withing the bounding box
   * Plot coordinates on mapping component
 
-Example installation exists on AWS. Contact me if you want to demo it because the instance is not running all the time:
-    [AWS Instance](http://ec2-54-69-77-46.us-west-2.compute.amazonaws.com:3000/)
-
+![Application Screenshot](http://teamshocker.com/pics/dev/geolite_heatmap_image.png)
+[Example installation](http://ec2-54-69-77-46.us-west-2.compute.amazonaws.com:3000/) exists on AWS. Contact me if you want to demo it because the instance is not running all the time
 #### Installation
 ##### Data
 ##### Create database for application use
