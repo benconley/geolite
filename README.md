@@ -7,6 +7,7 @@ geolite is a simple nodeJS application to retrieve and map Internet address info
 * [Installation](#Installation)
     * [Data Configuration](#Data)
     * [Code Configuration](#Code)
+    * [Render](#Render)
 * [Logging](#Logging)
 * [Linting](#Linting)
 * [Testing](#Testing)
@@ -83,8 +84,12 @@ $ DB_PORT_GEOLITE=3306
 Install the dependencies and devDependencies and start the server.
 ```
 $ npm install
-$ node app.js
+$ npm run start
 ```
+##### Render
+Site is set up to run on port 3000 at the base route by default. This can be customized in the environment setup and routes/routes.js
+[http://localhost:3000](http://localhost:3000)
+
 #### Logging
 Logger feature prints to stdout for consumption by Elastic Stack or similiar tooling. Environment settings will determine color formatting for logger
 Example output:
