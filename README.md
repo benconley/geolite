@@ -1,24 +1,32 @@
 # geolite
 Author: [Ben Conley](http://benconley.net/)
+
 geolite is a simple nodeJS application to retrieve and map Internet address information using geographical coordinates.
-### Basic Functionality
+#### Table of Contents
+* [Functionality](#Functionality)
+* [Installation](#Installation)
+    * [Data Configuration](#Data)
+    * [Code Configuration](#Code)
+* [Logging](#Logging)
+* [Linting](#Linting)
+* [Testing](#Testing)
+* [To Do List](#Todo)
+#### Functionality
   * Define a geographic coordinate bounding box using dragging/zooming on a mapping component
   * Submit bounding box corners to API
   * Retrieve coordinates and address information contained withing the bounding box
   * Plot coordinates on mapping component
 
-[Link Test](#Code)
-
 Example installation exists on AWS. Contact me if you want to demo it because the instance is not running all the time:
     http://
-### Installation
+#### Installation
 ##### Data
-###### Create database for application use
+##### Create database for application use
 ```sql
 CREATE DATABASE geolite
 ```
 *Now create user and either set permissions at database level or on individual tables/views once created*
-###### Define table to store IPv4 information
+##### Define table to store IPv4 information
 ```sql
 CREATE TABLE `geolite`.`blocks_ipv4` (
 	`network` VARCHAR(50),
@@ -37,12 +45,12 @@ CREATE TABLE `geolite`.`blocks_ipv4` (
 ) COMMENT 'ipv4 blocks'
 ENGINE=INNODB DEFAULT CHARSET=latin1;
 ```
-###### Create view for concise data used on heatmap
+##### Create view for concise data used on heatmap
 ```sql
 CREATE OR REPLACE VIEW `geolite`.`blocks_ipv4_concise` AS
 SELECT network, longitude, latitude FROM `geolite`.`blocks_ipv4`;
 ```
-###### Retrieve data from source and populate data store
+##### Retrieve data from source and populate data store
 ```sh
 $ wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City-CSV.zip
 $ unzip http://geolite.maxmind.com/download/geoip/database/GeoLite2-City-CSV.zip
@@ -77,7 +85,7 @@ Install the dependencies and devDependencies and start the server.
 $ npm install
 $ node app.js
 ```
-### Logging
+#### Logging
 Logger feature prints to stdout for consumption by Elastic Stack or similiar tooling. Environment settings will determine color formatting for logger
 Example output:
 ```
@@ -85,13 +93,13 @@ Example output:
 
 ::1 - - [08/Sep/2019:11:52:34 +0000] "GET /getIpsByBoundaryBox?latArr%5B%5D=35.83093683842937&latArr%5B%5D=35.6637522928614&longArr%5B%5D=-78.33293247262382&longArr%5B%5D=-78.85134983102226 HTTP/1.1" 200 179972 "http://localhost:3000/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36"
 ```
-### Linting
+#### Linting
 ```sh
 $ npm run lint
 $ npm run lint-fix
 ```
-### Testing
-###### Unit Tests
+#### Testing
+##### Unit Tests
 ```
 ben [~/dev/geolite]$ npm run test
 
@@ -109,7 +117,7 @@ Snapshots:   0 total
 Time:        1.701s, estimated 2s
 Ran all test suites.
 ```
-###### e2e Tests
+##### e2e Tests
 ```
 ben [~/dev/geolite]$ npm run e2e
 
@@ -127,3 +135,8 @@ Snapshots:   0 total
 Time:        1.363s, estimated 5s
 Ran all test suites.
 ```
+#### Todo
+* Support faster result renders with technology like protobufs
+* Implement cache for result sets using something like Redis
+* Support direct search functionality using addresses or typed coordinates
+* Implement additional mapping styles beyond heatmap
