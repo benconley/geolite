@@ -1,3 +1,5 @@
+/* global $, L */
+/* eslint no-unused-vars: ["error", { "varsIgnorePattern": "initialMapLoad" }] */
 // map component
 const mymap = L.map('mapid').setView([35.7796, -78.6382], 12);
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -33,7 +35,7 @@ function getResults(geoParams) {
         },
         success(data) {
             $('.loading').attr('style', 'visibility: hidden');
-            L.heatLayer(data, {radius: 25}).addTo(mymap);
+            L.heatLayer(data, { radius: 25 }).addTo(mymap);
         },
     });
 }

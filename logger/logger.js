@@ -36,7 +36,7 @@ const getConsoleTransport = () => {
                 format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
                 format.colorize(),
                 format.printf(
-                    info => `${info.timestamp} ${info.level}: ${info.message}`,
+                    (info) => `${info.timestamp} ${info.level}: ${info.message}`,
                 ),
             ),
         });
@@ -45,7 +45,7 @@ const getConsoleTransport = () => {
         format: format.combine(
             format.timestamp(),
             format.json(
-                content => content.message,
+                (content) => content.message,
             ),
         ),
     });
