@@ -40,7 +40,7 @@
     "@types/jest": "^24.0.18",
     "eslint": "^6.3.0",
     "eslint-config-airbnb": "^18.0.1",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "jest": "^24.9.0",
     "mock-knex": "^0.4.6",
     "proxyquire": "^2.1.3",
