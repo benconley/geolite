@@ -30,7 +30,7 @@
     "knex": "^0.20.8",
     "knex-paginator": "^2.0.0",
     "moment": "^2.24.0",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "node-fetch": "^2.6.0",
     "path": "^0.12.7",
