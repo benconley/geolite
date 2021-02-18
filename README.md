@@ -15,7 +15,7 @@ geolite is a simple nodeJS application to retrieve and map Internet address info
 #### Functionality
   * Define a geographic coordinate bounding box using dragging/zooming on a mapping component
   * Submit bounding box corners to API
-  * Retrieve coordinates and address information contained withing the bounding box
+  * Retrieve coordinates and address information contained within the bounding box
   * Plot coordinates on mapping component
 
 ![Application Screenshot](http://teamshocker.com/pics/dev/geolite_heatmap_image.png)
