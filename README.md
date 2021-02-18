@@ -67,7 +67,7 @@ git clone https://github.com/benconley/geolite.git
 ```
 Set ENV variables, or copy sample .env file and edit as desired
 ```
-$ cd repoViewer
+$ cd geolite
 $ cp .env.example .env
 $ vim .env
 

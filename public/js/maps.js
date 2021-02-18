@@ -2,12 +2,14 @@
 /* eslint no-unused-vars: ["error", { "varsIgnorePattern": "initialMapLoad" }] */
 // map component
 const mymap = L.map('mapid').setView([35.7796, -78.6382], 12);
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+    tileSize: 512,
     minZoom: 5,
     maxZoom: 15,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoicGFuZ2VhMzMiLCJhIjoiY2swNGtoeHN0MDJwZTNucG5zanB1cnBqeSJ9.eoHKvNZDxR0Yxtnc2bxjDw',
+    zoomOffset: -1,
+    id: 'mapbox/dark-v10',
+    accessToken: 'pk.eyJ1IjoicGFuZ2VhMzMiLCJhIjoiY2tsYTVrYTFqMGNubjJ1czZldGF2M3B0ayJ9.8ZzX2WUEN1Sc6L3HVfuHkQ'
 }).addTo(mymap);
 L.marker([35.7796, -78.6382]).addTo(mymap);
 
