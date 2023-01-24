@@ -27,7 +27,7 @@
     "express": "^4.17.3",
     "express-async-handler": "^1.1.4",
     "joi": "^14.3.1",
-    "knex": "^0.21.1",
+    "knex": "^2.4.0",
     "knex-paginator": "^2.0.0",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
